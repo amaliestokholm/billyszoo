@@ -22,6 +22,7 @@ html_content = """<!DOCTYPE html>
                 var yValues = data.map(d => d.y);
                 var labels = data.map(d => d.label);
                 var urls = data.map(d => d.url);
+                var descriptions = data.map(d => d.description);
 
                 var markerSizes = new Array(xValues.length).fill(10);
                 var markerColors = new Array(xValues.length).fill("blue");
@@ -40,7 +41,25 @@ html_content = """<!DOCTYPE html>
                 };
 
                 var layout = {
-                    title: "Click on a planet",
+                    title: {
+                        text: "Click on a planet",
+                        font: { family: "Arial, sans-serif", size: 18, color: "#333" }
+                    },
+                    xaxis: {
+                        title: {
+                            text: "log (orbital separation) (log(AU))",
+                            font: { family: "Courier New, monospace", size: 16, color: "darkblue" }
+                        },
+                        type: "log",
+                        range: [0.1, 1000]
+                    },
+                    yaxis: {
+                        title: {
+                            text: "Y Axis Label",
+                            font: { family: "Verdana, sans-serif", size: 16, color: "darkred" }
+                        },
+                        range: [0, 50]
+                    },
                     dragmode: false  // Disable zoom & panning
                 };
                 var config = {
@@ -54,9 +73,10 @@ html_content = """<!DOCTYPE html>
                     var x = xValues[pointIndex];
                     var y = yValues[pointIndex];
                     var label = labels[pointIndex];
+                    var description = descriptions[pointIndex];
                     var url = urls[pointIndex];
 
-                    document.getElementById('output').innerText = `Clicked on: \n${label} at x=${x}, y=${y} \nURL: ${url}`;
+                    document.getElementById('output').innerText = `Clicked on: \n${label} at x=${x}, y=${y} \n\n${description}\n\nURL: <a href="${url}" target="_blank" rel="noopener noreferrer">See ADS entry here</a>`;
 
                     markerSizes.fill(10);
                     markerColors.fill("blue");
