@@ -51,11 +51,11 @@ html_content = """<!DOCTYPE html>
                             font: { family: "Courier New, monospace", size: 16, color: "darkblue" }
                         },
                         type: "log",
-                        range: [0.1, 1000]
+                        range: [0.1, 4]
                     },
                     yaxis: {
                         title: {
-                            text: "Y Axis Label",
+                            text: "Planet mass (Earth mass)",
                             font: { family: "Verdana, sans-serif", size: 16, color: "darkred" }
                         },
                         range: [0, 50]
@@ -76,7 +76,11 @@ html_content = """<!DOCTYPE html>
                     var description = descriptions[pointIndex];
                     var url = urls[pointIndex];
 
-                    document.getElementById('output').innerText = `Clicked on: \n${label} at x=${x}, y=${y} \n\n${description}\n\nURL: <a href="${url}" target="_blank" rel="noopener noreferrer">See ADS entry here</a>`;
+                    document.getElementById('output').innerHTML =
+                        `Clicked on: <strong>${label}</strong><br>` +
+                        `Description: ${description}<br>` +
+                        `Coordinates: (x=${x}, y=${y})<br>` +
+                        `URL: <a href="${url}" target="_blank">${url} rel="noopener noreferrer">See ADS entry here</a>`;
 
                     markerSizes.fill(10);
                     markerColors.fill("blue");
