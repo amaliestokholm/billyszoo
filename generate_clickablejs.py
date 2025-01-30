@@ -51,7 +51,7 @@ html_content = """<!DOCTYPE html>
                             font: { family: "Courier New, monospace", size: 16, color: "darkblue" }
                         },
                         type: "log",
-                        range: [0.1, 4]
+                        range: [0.1, 3]
                     },
                     yaxis: {
                         title: {
@@ -59,7 +59,7 @@ html_content = """<!DOCTYPE html>
                             font: { family: "Verdana, sans-serif", size: 16, color: "darkred" }
                         },
                         type: "log",
-                        range: [0.1, 2]
+                        range: [0.4, 1]
                     },
                     dragmode: false  // Disable zoom & panning
                 };
