@@ -3,35 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Plotly Chart</title>
+    <title>Interactive Plotly Chart with QR Codes</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 </head>
 <body>
 
+    <h2>Click a Data Point to See Details and QR Code</h2>
     <div id="plot"></div>
     <p id="output">Click on a point to see details.</p>
+    <canvas id="qr-code"></canvas>  <!-- QR Code Canvas -->
 
     <script>
-        var trace = {
-            x: [1, 2, 3, 4],
-            y: [10, 20, 30, 40],
-            mode: 'markers',
-            type: 'scatter'
-        };
+        // Load JSON data
+        fetch("data.json")
+            .then(response => response.json())
+            .then(data => {
+                // Extract x, y, and URLs
+                var xValues = data.map(d => d.x);
+                var yValues = data.map(d => d.y);
+                var urls = data.map(d => d.url);
 
-        var layout = {
-            title: "Click a Data Point",
-        };
+                // Create the plot
+                var trace = {
+                    x: xValues,
+                    y: yValues,
+                    mode: 'markers',
+                    type: 'scatter'
+                };
 
-        Plotly.newPlot('plot', [trace], layout);
+                var layout = {
+                    title: "Click a Data Point"
+                };
 
-        document.getElementById('plot').on('plotly_click', function(eventData) {
-            var point = eventData.points[0];
-            var x = point.x;
-            var y = point.y;
+                Plotly.newPlot('plot', [trace], layout);
 
-            document.getElementById('output').innerText = `Clicked on: x=${x}, y=${y}`;
-        });
+                // Event listener for clicking on data points
+                document.getElementById('plot').on('plotly_click', function(eventData) {
+                    var pointIndex = eventData.points[0].pointIndex; // Get index of clicked point
+                    var x = xValues[pointIndex];
+                    var y = yValues[pointIndex];
+                    var url = urls[pointIndex]; // Get associated URL
+
+                    document.getElementById('output').innerText = `Clicked on: x=${x}, y=${y} 
+URL: ${url}`;
+
+                    // Generate QR Code
+                    var qr = new QRious({
+                        element: document.getElementById('qr-code'),
+                        value: url,
+                        size: 150
+                    });
+                });
+            })
+            .catch(error => console.error("Error loading JSON:", error));
     </script>
 
 </body>
