@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Plotly Chart with QR Codes</title>
+    <title>Billy's zoo of planets</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 </head>
@@ -35,21 +35,21 @@
                 };
 
                 var layout = {
-                    title: "Click on a Data Point"
+                    title: "Click on a Data Point",
                     dragmode: false  // Disable zoom & panning
-                }, {
+                };
+                var config = {
                     displayModeBar: false  // Hide the mode bar
                 };
 
-                Plotly.newPlot('plot', [trace], layout);
+                Plotly.newPlot('plot', [trace], layout, config);
 
-                // Event listener for clicking on data points
                 document.getElementById('plot').on('plotly_click', function(eventData) {
-                    var pointIndex = eventData.points[0].pointIndex; // Get index of clicked point
+                    var pointIndex = eventData.points[0].pointIndex;
                     var x = xValues[pointIndex];
                     var y = yValues[pointIndex];
                     var label = planetValues[pointIndex];
-                    var url = urls[pointIndex]; // Get associated URL
+                    var url = urls[pointIndex];
 
                     document.getElementById('output').innerText = `Clicked on: 
 ${label} at x=${x}, y=${y} 
