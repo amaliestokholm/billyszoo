@@ -58,7 +58,7 @@ html_content = """<!DOCTYPE html>
                             font: { family: "Verdana, sans-serif", size: 16, color: "darkred" }
                         },
                         type: "log",
-                        range: [0.1, 3]
+                        range: [-2, 3]
                     },
                     dragmode: false  // Disable zoom & panning
                 };
