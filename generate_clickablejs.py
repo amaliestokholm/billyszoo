@@ -29,7 +29,7 @@ html_content = """<!DOCTYPE html>
                     x: xValues,
                     y: yValues,
                     mode: 'markers',
-                    type: 'scatter'
+                    type: 'scatter',
                     text: labels,
                     hoverinfo: 'text'
                 };
