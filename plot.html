@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Plotly Chart</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+
+    <div id="plot"></div>
+    <p id="output">Click on a point to see details.</p>
+
+    <script>
+        var trace = {
+            x: [1, 2, 3, 4],
+            y: [10, 20, 30, 40],
+            mode: 'markers',
+            type: 'scatter'
+        };
+
+        var layout = {
+            title: "Click a Data Point",
+        };
+
+        Plotly.newPlot('plot', [trace], layout);
+
+        document.getElementById('plot').on('plotly_click', function(eventData) {
+            var point = eventData.points[0];
+            var x = point.x;
+            var y = point.y;
+
+            document.getElementById('output').innerText = `Clicked on: x=${x}, y=${y}`;
+        });
+    </script>
+
+</body>
+</html>
