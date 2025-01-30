@@ -21,7 +21,7 @@ html_content = """<!DOCTYPE html>
             .then(data => {
                 var xValues = data.map(d => d.x);
                 var yValues = data.map(d => d.y);
-                var labels = data.map(d => d.planet);
+                var labels = data.map(d => d.label);
                 var urls = data.map(d => d.url);
 
                 // Create the plot
@@ -48,7 +48,7 @@ html_content = """<!DOCTYPE html>
                     var pointIndex = eventData.points[0].pointIndex;
                     var x = xValues[pointIndex];
                     var y = yValues[pointIndex];
-                    var label = planetValues[pointIndex];
+                    var label = labels[pointIndex];
                     var url = urls[pointIndex];
 
                     document.getElementById('output').innerText = `Clicked on: \n${label} at x=${x}, y=${y} \nURL: ${url}`;

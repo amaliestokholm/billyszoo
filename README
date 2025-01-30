@@ -1,3 +1,13 @@
-I followed the guide on `https://github.com/dec0dedd/dash-actions-tutorial`.
-I got a draft of `app.py` to work locally, but to have it be interactive on the client side is more or a hazzle.
-I test this and it does not work
+
+This is just a plotly plot but with clickability via javascript.
+I am bad at javascript, so this attempt is an attempt.
+
+
+
+# Earlier
+I have looked into `plotly` and its ways of making interactive plots.
+Plots with `plotly` and `dash` are impressive and can do what I ideally want, however,
+
+I cannot host them easily on a github pages as the clickability cannot be clientside.
+
+I did follow the guide on `https://github.com/dec0dedd/dash-actions-tutorial` but it did not help me.
