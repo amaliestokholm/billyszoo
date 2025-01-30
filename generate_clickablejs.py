@@ -22,6 +22,7 @@ html_content = """<!DOCTYPE html>
                 // Extract x, y, and URLs
                 var xValues = data.map(d => d.x);
                 var yValues = data.map(d => d.y);
+                var planetValues = data.map(d => d.planet);
                 var urls = data.map(d => d.url);
 
                 // Create the plot
@@ -33,7 +34,10 @@ html_content = """<!DOCTYPE html>
                 };
 
                 var layout = {
-                    title: "Click a Data Point"
+                    title: "Click on a Data Point"
+                    dragmode: false  // Disable zoom & panning
+                }, {
+                    displayModeBar: false  // Hide the mode bar
                 };
 
                 Plotly.newPlot('plot', [trace], layout);
@@ -43,9 +47,10 @@ html_content = """<!DOCTYPE html>
                     var pointIndex = eventData.points[0].pointIndex; // Get index of clicked point
                     var x = xValues[pointIndex];
                     var y = yValues[pointIndex];
+                    var planet = planetValues[pointIndex];
                     var url = urls[pointIndex]; // Get associated URL
 
-                    document.getElementById('output').innerText = `Clicked on: x=${x}, y=${y} \nURL: ${url}`;
+                    document.getElementById('output').innerText = `Clicked on: ${planet} at x=${x}, y=${y} \nURL: ${url}`;
 
                     // Generate QR Code
                     var qr = new QRious({
