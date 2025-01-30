@@ -19,10 +19,9 @@ html_content = """<!DOCTYPE html>
         fetch("data.json")
             .then(response => response.json())
             .then(data => {
-                // Extract x, y, and URLs
                 var xValues = data.map(d => d.x);
                 var yValues = data.map(d => d.y);
-                var planetValues = data.map(d => d.planet);
+                var labels = data.map(d => d.planet);
                 var urls = data.map(d => d.url);
 
                 // Create the plot
@@ -31,6 +30,8 @@ html_content = """<!DOCTYPE html>
                     y: yValues,
                     mode: 'markers',
                     type: 'scatter'
+                    text: labels,
+                    hoverinfo: 'text'
                 };
 
                 var layout = {
@@ -47,10 +48,10 @@ html_content = """<!DOCTYPE html>
                     var pointIndex = eventData.points[0].pointIndex; // Get index of clicked point
                     var x = xValues[pointIndex];
                     var y = yValues[pointIndex];
-                    var planet = planetValues[pointIndex];
+                    var label = planetValues[pointIndex];
                     var url = urls[pointIndex]; // Get associated URL
 
-                    document.getElementById('output').innerText = `Clicked on: ${planet} at x=${x}, y=${y} \nURL: ${url}`;
+                    document.getElementById('output').innerText = `Clicked on: \n${label} at x=${x}, y=${y} \nURL: ${url}`;
 
                     // Generate QR Code
                     var qr = new QRious({

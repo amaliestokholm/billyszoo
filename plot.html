@@ -19,10 +19,9 @@
         fetch("data.json")
             .then(response => response.json())
             .then(data => {
-                // Extract x, y, and URLs
                 var xValues = data.map(d => d.x);
                 var yValues = data.map(d => d.y);
-                var planetValues = data.map(d => d.planet);
+                var labels = data.map(d => d.planet);
                 var urls = data.map(d => d.url);
 
                 // Create the plot
@@ -31,6 +30,8 @@
                     y: yValues,
                     mode: 'markers',
                     type: 'scatter'
+                    text: labels,
+                    hoverinfo: 'text'
                 };
 
                 var layout = {
@@ -47,10 +48,11 @@
                     var pointIndex = eventData.points[0].pointIndex; // Get index of clicked point
                     var x = xValues[pointIndex];
                     var y = yValues[pointIndex];
-                    var planet = planetValues[pointIndex];
+                    var label = planetValues[pointIndex];
                     var url = urls[pointIndex]; // Get associated URL
 
-                    document.getElementById('output').innerText = `Clicked on: ${planet} at x=${x}, y=${y} 
+                    document.getElementById('output').innerText = `Clicked on: 
+${label} at x=${x}, y=${y} 
 URL: ${url}`;
 
                     // Generate QR Code
