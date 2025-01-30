@@ -47,11 +47,10 @@ html_content = """<!DOCTYPE html>
                     },
                     xaxis: {
                         title: {
-                            text: "log (orbital separation) [log(AU)]",
+                            text: "orbital separation [AU]",
                             font: { family: "Courier New, monospace", size: 16, color: "darkblue" }
                         },
-                        type: "log",
-                        range: [0.4, 1]
+                        range: [0.01, 20]
                     },
                     yaxis: {
                         title: {
