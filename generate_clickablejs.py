@@ -18,8 +18,8 @@ html_content = """<!DOCTYPE html>
         fetch("data.json")
             .then(response => response.json())
             .then(data => {
-                var xValues = data.map(d => d.x);
-                var yValues = data.map(d => d.y);
+                var xValues = data.map(d => d.orbital_separation);
+                var yValues = data.map(d => d.mass);
                 var labels = data.map(d => d.label);
                 var urls = data.map(d => d.url);
                 var descriptions = data.map(d => d.description || "No description available.");
@@ -51,7 +51,7 @@ html_content = """<!DOCTYPE html>
                             font: { family: "Courier New, monospace", size: 16, color: "darkblue" }
                         },
                         type: "log",
-                        range: [0.1, 3]
+                        range: [0.4, 1]
                     },
                     yaxis: {
                         title: {
@@ -59,7 +59,7 @@ html_content = """<!DOCTYPE html>
                             font: { family: "Verdana, sans-serif", size: 16, color: "darkred" }
                         },
                         type: "log",
-                        range: [0.4, 1]
+                        range: [0.1, 3]
                     },
                     dragmode: false  // Disable zoom & panning
                 };
