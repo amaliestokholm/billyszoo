@@ -14,7 +14,7 @@ nest-asyncio==1.6.0
 numpy
 packaging==24.0
 plotly==5.18.0
-pandas==24.0
+pandas==2.2.3
 requests==2.31.0
 retrying==1.3.4
 six==1.16.0
