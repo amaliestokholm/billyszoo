@@ -1,5 +1,6 @@
 [
-    {"mass": 12.7, "orbital_separation": 0.1130, "label": "TOI-6478 b", "url": "https://example.com/page1", "description": "Hi "},
     {"mass": 110, "orbital_separation": 0.6925, "label": "Kepler-16 (AB) b", "url": "https://ui.adsabs.harvard.edu/abs/2022MNRAS.511.3561T/abstract", "description": "Hi"},
-    {"mass": 524.5454, "orbital_separation": 0.462, "label": "8 Ursae Minoris b", "url": "https://ui.adsabs.harvard.edu/abs/2023Natur.618..917H/abstract", "description": "Hi"}
+    {"mass": 524.5454, "orbital_separation": 0.462, "label": "8 Ursae Minoris b", "url": "https://ui.adsabs.harvard.edu/abs/2023Natur.618..917H/abstract", "description": "Hi"},
+    {"mass": 1, "orbital_separation": 1, "label": "Earth", "url": "earth3dmap.com", "description": "Home"}
+
 ]
