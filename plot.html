@@ -22,7 +22,7 @@
                 var yValues = data.map(d => d.y);
                 var labels = data.map(d => d.label);
                 var urls = data.map(d => d.url);
-                var descriptions = data.map(d => d.description);
+                var descriptions = data.map(d => d.description || "No description available.");
 
                 var markerSizes = new Array(xValues.length).fill(10);
                 var markerColors = new Array(xValues.length).fill("blue");
@@ -47,7 +47,7 @@
                     },
                     xaxis: {
                         title: {
-                            text: "log (orbital separation) (log(AU))",
+                            text: "log (orbital separation) [log(AU)]",
                             font: { family: "Courier New, monospace", size: 16, color: "darkblue" }
                         },
                         type: "log",
@@ -55,10 +55,11 @@
                     },
                     yaxis: {
                         title: {
-                            text: "Planet mass (Earth mass)",
+                            text: "log (Planet mass) [log(Earth mass)]",
                             font: { family: "Verdana, sans-serif", size: 16, color: "darkred" }
                         },
-                        range: [0, 50]
+                        type: "log",
+                        range: [0.1, 2]
                     },
                     dragmode: false  // Disable zoom & panning
                 };
@@ -80,7 +81,7 @@
                         `Clicked on: <strong>${label}</strong><br>` +
                         `Description: ${description}<br>` +
                         `Coordinates: (x=${x}, y=${y})<br>` +
-                        `URL: <a href="${url}" target="_blank">${url} rel="noopener noreferrer">See ADS entry here</a>`;
+                        `URL: <a href="${url}" target="_blank" rel="noopener noreferrer">See ADS entry here</a>`;
 
                     markerSizes.fill(10);
                     markerColors.fill("blue");
