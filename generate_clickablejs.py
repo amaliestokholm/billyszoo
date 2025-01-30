@@ -15,7 +15,6 @@ html_content = """<!DOCTYPE html>
     <canvas id="qr-code"></canvas>  <!-- QR Code Canvas -->
 
     <script>
-        // Load JSON data
         fetch("data.json")
             .then(response => response.json())
             .then(data => {
@@ -24,18 +23,24 @@ html_content = """<!DOCTYPE html>
                 var labels = data.map(d => d.label);
                 var urls = data.map(d => d.url);
 
-                // Create the plot
+                var markerSizes = new Array(xValues.length).fill(10);
+                var markerColors = new Array(xValues.length).fill("blue");
+
                 var trace = {
                     x: xValues,
                     y: yValues,
                     mode: 'markers',
                     type: 'scatter',
                     text: labels,
-                    hoverinfo: 'text'
+                    hoverinfo: 'text',
+                    marker: {
+                        size: markerSizes,
+                        color: markerColors
+                    }
                 };
 
                 var layout = {
-                    title: "Click on a Data Point",
+                    title: "Click on a planet",
                     dragmode: false  // Disable zoom & panning
                 };
                 var config = {
@@ -52,6 +57,18 @@ html_content = """<!DOCTYPE html>
                     var url = urls[pointIndex];
 
                     document.getElementById('output').innerText = `Clicked on: \n${label} at x=${x}, y=${y} \nURL: ${url}`;
+
+                    markerSizes.fill(10);
+                    markerColors.fill("blue");
+
+                    // Change appearance of the clicked point
+                    markerSizes[pointIndex] = 20;
+                    markerColors[pointIndex] = "orange";
+
+                    Plotly.restyle('plot', {
+                        'marker.size': [markerSizes],
+                        'marker.color': [markerColors]
+                    });
 
                     // Generate QR Code
                     var qr = new QRious({
