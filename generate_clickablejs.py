@@ -1,4 +1,13 @@
-html_content = """<!DOCTYPE html>
+import json
+
+# Load the data from data.json
+with open("data.json", "r") as f:
+    data = json.load(f)
+
+# Embed it as a JavaScript variable
+data_js = json.dumps(data, indent=4)
+
+html_content = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,97 +21,94 @@ html_content = """<!DOCTYPE html>
     <h2>Billy's zoo of planets</h2>
     <div id="plot"></div>
     <p id="output">Click on a planet to see details</p>
-    <canvas id="qr-code"></canvas>  <!-- QR Code Canvas -->
+    <canvas id="qr-code"></canvas>
 
     <script>
-        fetch("data.json")
-            .then(response => response.json())
-            .then(data => {
-                var xValues = data.map(d => d.orbital_separation);
-                var yValues = data.map(d => d.mass);
-                var labels = data.map(d => d.label);
-                var urls = data.map(d => d.url);
-                var descriptions = data.map(d => d.description || "No description available.");
+        // Data embedded at build time by generate_clickablejs.py
+        var data = {data_js};
 
-                var markerSizes = new Array(xValues.length).fill(10);
-                var markerColors = new Array(xValues.length).fill("blue");
+        var xValues = data.map(d => d.orbital_separation);
+        var yValues = data.map(d => d.mass);
+        var labels = data.map(d => d.label);
+        var urls = data.map(d => d.url);
+        var descriptions = data.map(d => d.description || "No description available.");
 
-                var trace = {
-                    x: xValues,
-                    y: yValues,
-                    mode: 'markers',
-                    type: 'scatter',
-                    text: labels,
-                    hoverinfo: 'text',
-                    marker: {
-                        size: markerSizes,
-                        color: markerColors
-                    }
-                };
+        var markerSizes = new Array(xValues.length).fill(10);
+        var markerColors = new Array(xValues.length).fill("blue");
 
-                var layout = {
-                    title: {
-                        text: "Click on a planet",
-                        font: { family: "Arial, sans-serif", size: 18, color: "#333" }
-                    },
-                    xaxis: {
-                        title: {
-                            text: "orbital separation [AU]",
-                            font: { family: "Courier New, monospace", size: 16, color: "darkblue" }
-                        },
-                        range: [0.01, 3]
-                    },
-                    yaxis: {
-                        title: {
-                            text: "log (Planet mass) [log(Earth mass)]",
-                            font: { family: "Verdana, sans-serif", size: 16, color: "darkred" }
-                        },
-                        type: "log",
-                        range: [-2, 3]
-                    },
-                    dragmode: false  // Disable zoom & panning
-                };
-                var config = {
-                    displayModeBar: false  // Hide the mode bar
-                };
+        var trace = {{
+            x: xValues,
+            y: yValues,
+            mode: 'markers',
+            type: 'scatter',
+            text: labels,
+            hoverinfo: 'text',
+            marker: {{
+                size: markerSizes,
+                color: markerColors
+            }}
+        }};
 
-                Plotly.newPlot('plot', [trace], layout, config);
+        var layout = {{
+            title: {{
+                text: "Click on a planet",
+                font: {{ family: "Arial, sans-serif", size: 18, color: "#333" }}
+            }},
+            xaxis: {{
+                title: {{
+                    text: "orbital separation [AU]",
+                    font: {{ family: "Courier New, monospace", size: 16, color: "darkblue" }}
+                }},
+                range: [0.01, 3]
+            }},
+            yaxis: {{
+                title: {{
+                    text: "log (Planet mass) [log(Earth mass)]",
+                    font: {{ family: "Verdana, sans-serif", size: 16, color: "darkred" }}
+                }},
+                type: "log",
+                range: [-2, 3]
+            }},
+            dragmode: false
+        }};
 
-                document.getElementById('plot').on('plotly_click', function(eventData) {
-                    var pointIndex = eventData.points[0].pointIndex;
-                    var x = xValues[pointIndex];
-                    var y = yValues[pointIndex];
-                    var label = labels[pointIndex];
-                    var description = descriptions[pointIndex];
-                    var url = urls[pointIndex];
+        var config = {{
+            displayModeBar: false
+        }};
 
-                    document.getElementById('output').innerHTML =
-                        `Clicked on: <strong>${label}</strong><br>` +
-                        `Description: ${description}<br>` +
-                        `Coordinates: (x=${x}, y=${y})<br>` +
-                        `URL: <a href="${url}" target="_blank" rel="noopener noreferrer">See ADS entry here</a>`;
+        Plotly.newPlot('plot', [trace], layout, config);
 
-                    markerSizes.fill(10);
-                    markerColors.fill("blue");
+        document.getElementById('plot').on('plotly_click', function(eventData) {{
+            var pointIndex = eventData.points[0].pointIndex;
+            var x = xValues[pointIndex];
+            var y = yValues[pointIndex];
+            var label = labels[pointIndex];
+            var description = descriptions[pointIndex];
+            var url = urls[pointIndex];
 
-                    // Change appearance of the clicked point
-                    markerSizes[pointIndex] = 20;
-                    markerColors[pointIndex] = "orange";
+            document.getElementById('output').innerHTML =
+                `Clicked on: <strong>${{label}}</strong><br>` +
+                `Description: ${{description}}<br>` +
+                `Coordinates: (x=${{x}}, y=${{y}})<br>` +
+                `URL: <a href="${{url}}" target="_blank" rel="noopener noreferrer">See ADS entry here</a>`;
 
-                    Plotly.restyle('plot', {
-                        'marker.size': [markerSizes],
-                        'marker.color': [markerColors]
-                    });
+            markerSizes.fill(10);
+            markerColors.fill("blue");
 
-                    // Generate QR Code
-                    var qr = new QRious({
-                        element: document.getElementById('qr-code'),
-                        value: url,
-                        size: 150
-                    });
-                });
-            })
-            .catch(error => console.error("Error loading JSON:", error));
+            markerSizes[pointIndex] = 20;
+            markerColors[pointIndex] = "orange";
+
+            Plotly.restyle('plot', {{
+                'marker.size': [markerSizes],
+                'marker.color': [markerColors]
+            }});
+
+            var qr = new QRious({{
+                element: document.getElementById('qr-code'),
+                value: url,
+                size: 150
+            }});
+        }});
     </script>
 
 </body>
